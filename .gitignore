@@ -1,0 +1,4 @@
+.env.local
+certs/*
+entando-helm-quickstart/values.yaml
+app--*

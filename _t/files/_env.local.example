@@ -1,0 +1,10 @@
+#!/bin/bash
+
+export NAMESPACE="..."
+export APPNAME="..."
+
+export SUFFIX="..."
+export DOMAIN="$NAMESPACE.$SUFFIX"
+
+export REQUIRED_CONTEXT="..."
+export REQUIRED_CONFIG="..."

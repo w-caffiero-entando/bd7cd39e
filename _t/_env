@@ -1,0 +1,30 @@
+#!/bin/bash
+
+. "./_env.local" 2>/dev/null || {
+  echo "Please provide a valid the _env.local file"
+  exit 99
+}
+
+alias k='ent k -n "$NAMESPACE"'
+
+type k 2>/dev/null
+
+FOUND_NAMESPACE="$(ent namespace)"
+
+if [ "$FOUND_NAMESPACE" != "$NAMESPACE" ]; then
+  echo "FATAL: FOUND NAMESPACE \"$FOUND_NAMESPACE\" != REQUIRED \"$NAMESPACE\""
+  exit 99
+fi
+
+FOUND_CONTEXT="$(ent status | grep -- '- K8S CONTEXT:' | sed 's/.*:[ ]*//')"
+FOUND_CONFIG="$(ent status | grep -- '- KUBECONFIG:' | sed 's/.*:[ ]*//')"
+
+if [ "$FOUND_CONTEXT" != "$REQUIRED_CONTEXT" ]; then
+  echo "FATAL: FOUND CONTEXT \"$FOUND_CONTEXT\" != REQUIRED \"$REQUIRED_CONTEXT\""
+  exit 99
+fi
+
+if [ "$FOUND_CONFIG" != "$REQUIRED_CONFIG" ]; then
+  echo "FATAL: FOUND CONFIG \"$FOUND_CONFIG\" != REQUIRED \"$REQUIRED_CONFIG\""
+  exit 99
+fi
